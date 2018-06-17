@@ -1,0 +1,49 @@
+{% extends 'basic_app/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      {% if updated %}
+      <div class="container">
+            <ul class="navbar-nav">          
+            <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:articles' %}">Dashboard</a></li>
+            <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:settings' %}">Settings</a></li>
+            <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:createarticle' %}">Create Article</a></li>
+            <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:myarticles' %}">My Articles</a></li>
+
+            </ul>
+        </div>
+        <h1>Your Changes Have been Saved!</h1>
+      {% else %}
+        <h1>Edit Your Article</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <ul class="navbar-nav">          
+                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:articles' %}">Dashboard</a></li>
+                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:settings' %}">Settings</a></li>
+                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:createarticle' %}">Create Article</a></li>
+                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:myarticles' %}">My Articles</a></li>
+
+                    </ul>
+                </div>
+            </nav>
+      <table border="1">
+
+        <form action="{%url 'basic_app:editpostsubmit'%}" method="POST">
+          {% csrf_token %}
+          {{ form.as_table }}
+          <br><br>
+         
+
+      </table>
+      <br><br>
+      <input class= "btn btn-primary" type="submit" name="editpost" value="Update">
+    </form>
+     
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+{% endblock %}

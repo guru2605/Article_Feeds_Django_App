@@ -1,0 +1,73 @@
+{% extends 'basic_app/base.html' %}
+{%load staticfiles%}
+
+
+
+{% block body_block %}
+  <div class="container">
+        <div class="container">
+                {% if user.is_authenticated %}
+                <div class="container">
+                
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container">
+                                    <ul class="navbar-nav">          
+                                    <li  class="nav-item active"><a class="nav-link" href="{% url 'basic_app:articles' %}">Dashboard<span class="sr-only">(current)</span></a></li>
+                                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:settings' %}">Settings</a></li>
+                                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:createarticle' %}">Create Article</a></li>
+                                    <li  class="nav-item"><a class="nav-link" href="{% url 'basic_app:myarticles' %}">My Articles</a></li>
+
+                              </ul>
+                                </div>
+                            </nav>
+                
+                
+                </div>
+                
+                {%endif%}
+                <div class="container">
+
+                  <h1 style="margin-left:25%;color:blue">Article Wall</h1>
+                  {%if msg %}
+                  <h3>{{msg}}</h3>
+                  {%endif%}
+
+                  {% for article in article_list %}
+                  <div class=" row">
+                        <div class=" col-sm-9 " style="list-style-type:none">            
+                        <div class="container-fluid">
+                              <h3 class="card-header" style="margin-top:10px;color:deepskyblue;">Artical Name: {{article.article_name}}<p style="font-size:12px;color:blueviolet;font-style:bold;display:inline">PostedBy: {{article.published_by}}</p>
+                                 
+                              <form method="post" action="{%url 'basic_app:editpost'%}">
+                                    {%csrf_token%}
+                                    <button type="submit" class="btn btn-primary" name="post_id" value="{{article.id}}" style="float:right;margin-top:0;"><span ><i class="material-icons">mode_edit</i></span></button>
+
+                              </form>  
+                              <form method="post" action="{%url 'basic_app:deletepost'%}">
+                                    {%csrf_token%}
+                                    <button type="submit" class="btn btn-primary" name="post_id" value="{{article.id}}" style="float:right;margin-top:0;"><span ><i class="material-icons">delete</i></span></button>
+      
+                              </form> 
+                              
+                              </h3> 
+                              
+                              <p class="card-body" style="background-color:antiquewhite;color:black;font-style:italic;margin-bottom:0"> 
+                                    {{article.article_body}}
+                              </p>   
+                              <div class="container-fluid" style="background-color:darkgrey;margin-top:0">
+
+                                    <p>Likes Count:  {{article.likes.count}}</p>
+                                    <p>Dislikes Count:  {{article.dislikes.count}}</p>
+                                    <p>Blocks Count:  {{article.blocks.count}}</p>
+                                    
+                              </div>           
+ 
+                        </div>                
+                        </div>       
+                  </div>
+                  <br><br>           
+                  {%endfor%}
+                </div>    
+    </div>
+  
+{% endblock %}
