@@ -115,7 +115,7 @@ def articles_list(request):
     user = request.user    
     user_ob = UserProfileInfo.objects.get(user=user)
     user_choices=str(user_ob.articlecategory)
-    print user_choices     
+    print(user_choices)
 
     
 
@@ -143,10 +143,10 @@ def createpost(request):
             try:
                 articleob =ArticleModel(article_type=article_type,article_name=article_name,article_body=article_body,published_by=published_by)
                 articleob.save()
-                print "SUCESSSSSSSSSSSSSS"
+                print("SUCESSSSSSSSSSSSSS") 
                 return render(request,"basic_app/article_create.html",{'form':article_form,'color':'green','msg':'Article Posted Successfully'})
             except:
-                print "ERROR inserting article"
+                print( "ERROR inserting article")
                 return render(request,"basic_app/article_create.html",{'form':article_form,'color':'red','msg':'Article could not be posted'})
 
    
@@ -165,7 +165,7 @@ def edit_post(request):
         article_form = AddArticle(initial={'article_name':article_name,'article_body':article_body,'article_type':article_type})
         return render(request,"basic_app/editpost.html",{'form':article_form,'updated':updated})
     else:
-        print "ERROR loading form"
+        print( "ERROR loading form")
         return HttpResponse('Error loading form')
 
 def edit_post_submit(request):
@@ -179,10 +179,10 @@ def edit_post_submit(request):
             try:
                 articleob =ArticleModel(article_type=article_type,article_name=article_name,article_body=article_body,published_by=published_by)
                 articleob.save()
-                print "SUCESSSSSSSSSSSSSS"
+                print("SUCESSSSSSSSSSSSSS")
                 return render(request,"basic_app/myarticles.html",{'form':article_form,'color':'green','msg':'Article Updated Successfully'})
             except:
-                print "ERROR inserting article"
+                print("ERROR inserting article")
                 return render(request,"basic_app/editpost.html",{'form':article_form,'color':'red','msg':'Article could not be Updated'})
 
 
@@ -191,7 +191,7 @@ def edit_post_submit(request):
 def deletepost(request):
     if request.method == 'POST':
         ArticleModel.objects.filter(id=request.POST.get('post_id')).delete()
-        print "deleted"
+        print("deleted")
         return HttpResponseRedirect('/basic_app/myarticles')
 
 
